@@ -1,23 +1,90 @@
 /*
-Creating DB TABLE
-*/
-geekers
-CREATE TABLE PIZZA(
-    Pizza_ID NUMERIC ()
+ Creating DB TABLE
+ */
 
-)
+/* Drop all tables if they already exist. */
+
+
+DROP TABLE IF EXISTS PIZZA;
+
+DROP TABLE IF EXISTS CUSTOMER;
+
+DROP TABLE IF EXISTS ORDER;
+
+DROP TABLE IF EXISTS INGREDIENT;
+
+DROP TABLE IF EXISTS DELIVERY;
+
+DROP TABLE IF EXISTS CUSTOM;
+
+DROP TABLE IF EXISTS PRESET;
+
+CREATE TABLE PIZZA(
+    Pizza_ID NUMERIC () NOT NULL,
+    PRIMARY KEY (Pizza_ID),
+    Diameter VARCHAR(),
+    Quantity NUMERIC(),
+    Extras VARCHAR (),
+    Pizza_Type VARCHAR()
+) ENGINE InnoDB;
 
 CREATE TABLE CUSTOMER (
-    Customer_ID NUMERIC ()
-
-)
+    Customer_ID NUMERIC () NOT NULL,
+    PRIMARY KEY (Customer_ID),
+    Name VARCHAR (),
+    Phone_Number CHAR (),
+    Address VARCHAR()
+) ENGINE InnoDB;
 
 CREATE TABLE ORDER (
-    Order_ID NUMERIC ()
-
-)
+    Order_ID NUMERIC () NOT NULL,
+    PRIMARY KEY (Order_ID),
+    Customer_ID NUMERIC(),
+    FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER (Customer_ID),
+    Feedback_Score NUMERIC (),
+    Comment VARCHAR(),
+    Date CHAR (),
+    Time_Placed CHAR (),
+    Order_Status VARCHAR (),
+    Total_Price VARCHAR (),
+    Pick_Up VARCHAR(),
+) ENGINE InnoDB;
 
 CREATE TABLE INGREDIENT(
-    Ingredient_Name NUMERIC ()
-)
+    Ingredient_Name NUMERIC (),
+    PRIMARY KEY (Ingredient_Name),
+    Ingredient_Type VARCHAR (),
+    Ingredient_Quantity NUMERIC ()
+) ENGINE InnoDB;
 
+CREATE TABLE DELIVERY (
+    Employee_ID NUMERIC () NOT NULL,
+    PRIMARY KEY (Employee_ID),
+    Order_ID NUMERIC(),
+    FOREIGN KEY (Order_ID) REFERENCES ORDER (Order_ID),
+    Customer_ID NUMERIC (),
+    FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER (Customer_ID),
+    Trip_Distance VARCHAR ()
+) ENGINE InnoDB;
+
+CREATE TABLE CUSTOM(
+    Pizza_ID NUMERIC(),
+    FOREIGN KEY(Pizza_ID) REFERENCES PIZZA (Pizza_ID),
+    Ingredient_Selection VARCHAR()
+) ENGINE InnoDB;
+
+CREATE TABLE PRESET(
+    Pizza_ID NUMERIC(),
+    FOREIGN KEY (Pizza_ID) REFERENCES PIZZA (Pizza_ID),
+    Pizza_Name VARCHAR(),
+    Ingredients VARCHAR()
+) ENGINE InnoDB;
+
+
+INSERT INTO PIZZA VALUES
+INSERT INTO CUSTOMER VALUES
+INSERT INTO ORDER VALUES
+INSERT INTO INGREDIENT VALUES
+INSERT INTO DELIVERY VALUES
+INSERT INTO CUSTOM VALUES
+INSERT INTO PRESET VALUES
