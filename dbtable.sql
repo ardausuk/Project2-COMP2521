@@ -1,7 +1,7 @@
 /*
 Creating DB TABLE
 */
-
+geek
 CREATE TABLE PIZZA(
     Pizza_ID NUMERIC ()
 
