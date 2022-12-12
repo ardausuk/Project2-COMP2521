@@ -22,8 +22,10 @@ DROP TABLE IF EXISTS PRESET;
 CREATE TABLE PIZZA(
     Pizza_ID NUMERIC () NOT NULL,
     PRIMARY KEY (Pizza_ID),
-    Diameter VARCHAR(),
-    Quantity NUMERIC(),
+    Ingredient_ID NUMERIC () NOT NULL,
+    FOREIGN KEY (Ingredient_ID) REFERENCES PIZZA_INGREDIENT (Ingredient_ID),
+    Size VARCHAR (),
+    Quantity_of_Pizzas NUMERIC(),
     Extras VARCHAR (),
     Pizza_Type VARCHAR()
 ) ENGINE InnoDB;
@@ -50,10 +52,9 @@ CREATE TABLE ORDER (
     Pick_Up VARCHAR(),
 ) ENGINE InnoDB;
 
-CREATE TABLE INGREDIENT(
+CREATE TABLE PIZZA_INGREDIENT(
     Ingredient_Name NUMERIC (),
     PRIMARY KEY (Ingredient_Name),
-    Ingredient_Type VARCHAR (),
     Ingredient_Quantity NUMERIC ()
 ) ENGINE InnoDB;
 
@@ -65,19 +66,6 @@ CREATE TABLE DELIVERY (
     Customer_ID NUMERIC (),
     FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER (Customer_ID),
     Trip_Distance VARCHAR ()
-) ENGINE InnoDB;
-
-CREATE TABLE CUSTOM(
-    Pizza_ID NUMERIC(),
-    FOREIGN KEY(Pizza_ID) REFERENCES PIZZA (Pizza_ID),
-    Ingredient_Selection VARCHAR()
-) ENGINE InnoDB;
-
-CREATE TABLE PRESET(
-    Pizza_ID NUMERIC(),
-    FOREIGN KEY (Pizza_ID) REFERENCES PIZZA (Pizza_ID),
-    Pizza_Name VARCHAR(),
-    Ingredients VARCHAR()
 ) ENGINE InnoDB;
 
 
@@ -106,12 +94,3 @@ INSERT INTO DELIVERY VALUES
 (2, 200 002, 222, "20km"),
 (3, 308 556, 333, "35km");
 
-INSERT INTO CUSTOM VALUES
-(223, "Broccoli"),
-(487, "Chicken"),
-(999, "Olives");
-
-INSERT INTO PRESET VALUES
-(223, "Butter Chicken", "Chicken, Cheese, Curry"),
-(487, "Buffalo Chicken", "Chicken, Hot sauce, Onions"),
-(999, "Cheese", "Gouda, Mozzarella, Feta");
