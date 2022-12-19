@@ -1,11 +1,11 @@
-/*DROP TABLE IF EXISTS CUSTOMER; 
+DROP TABLE IF EXISTS CUSTOMER; 
 DROP TABLE IF EXISTS ORDERS;
 DROP TABLE IF EXISTS DELIVERY;
 DROP TABLE IF EXISTS PIZZA;
 DROP TABLE IF EXISTS PIZZA_INGREDIENT;
 DROP TABLE IF EXISTS ORDER_STATUS;
 DROP TABLE IF EXISTS PIZZA_ORDER;
-DROP TABLE IF EXISTS PIZZA_RECIPE;*/
+DROP TABLE IF EXISTS PIZZA_RECIPE;
 
 CREATE TABLE CUSTOMER(
     Customer_ID NUMERIC (3),
@@ -23,6 +23,10 @@ CREATE TABLE ORDERS(
     Order_Date DATE,
     Order_Time VARCHAR (7), 
     Total_Price VARCHAR (63),
+    Order_Received_Timestamp TIMESTAMP,
+    Ready_For_Pickup_Timestamp TIMESTAMP,
+    Picked_Up_By_Driver_Timestamp TIMESTAMP,
+    Delivered_By_Driver_Timestamp TIMESTAMP
 ) ENGINE InnoDB;
 
 CREATE TABLE DELIVERY(
@@ -70,16 +74,16 @@ INSERT INTO CUSTOMER (Customer_ID, Customer_Name, Phone, Customer_Address) VALUE
 (190, 'Melissa Trot', '(403) 223-9586', '64 Beddington Ln.'),
 (909, 'Drip Muni', '(403) 786-4345', '23 Water Blvd.'),
 (100, 'Steve Eek', '(587) 334- 2345', '54 Airdene Rd.');
-INSERT INTO ORDERS (Order_ID, Customer_ID, Feedback_Score, Comments, Order_Status, Order_Date, Order_Time, Total_Price) VALUES
-(999, 123, 3, 'Slower service.', 'Delivered by driver', 2022-12-18, '01:30:05', '23.50'),
-(888, 567, 4, 'Good food!', 'Ready for pickup', 2022-12-18, '12:30:00', '56.33'),
-(777, 890, 5, 'Fantastic place!', 'Ready for pickup', 2022-12-18, '21:34:43', '54.55'),
-(666, 344, 2, 'It was ok', 'Driver picked up', 2022-12-18, '13:30:00', '86.66'),
-(555, 209, 3, 'Food was good but service ws slow', 'Driver picked up', 2022-12-17, '16:45:00', '23.45'),
-(444, 606, 1, 'The food was okay, poor service', 'Delivered by driver', 2022-12-17, '15:43:09', '22.69'),
-(333, 435, 5, 'Iloved the food!', 'Delivered by driver', 2022-12-17, '11:30:11', '45.65'),
-(222, 190, 5, 'Everything was great!', 'Ready for pickup', 2022-12-17, '01:45:15', '54.76'),
-(111, 909, 5, 'Great service!', 'Driver picked up', 2022-12-17, '17:30:25', '12.34');
+INSERT INTO ORDERS (Order_ID, Customer_ID, Feedback_Score, Comments, Order_Status, Order_Date, Order_Time, Total_Price, Order_Received_Timestamp, Ready_For_Pickup_Timestamp, Picked_Up_By_Driver_Timestamp, Delivered_By_Driver_Timestamp) VALUES
+(999, 123, 3, 'Slower service.', 'Delivered by driver', 2022-12-18, '01:30:05', '23.50', NULL, NULL, NULL, NULL),
+(888, 567, 4, 'Good food!', 'Ready for pickup', 2022-12-18, '12:30:00', '56.33', NULL, NULL, NULL, NULL),
+(777, 890, 5, 'Fantastic place!', 'Ready for pickup', 2022-12-18, '21:34:43', '54.55', NULL, NULL, NULL, NULL),
+(666, 344, 2, 'It was ok', 'Driver picked up', 2022-12-18, '13:30:00', '86.66', NULL, NULL, NULL, NULL),
+(555, 209, 3, 'Food was good but service ws slow', 'Driver picked up', 2022-12-17, '16:45:00', '23.45', NULL, NULL, NULL, NULL),
+(444, 606, 1, 'The food was okay, poor service', 'Delivered by driver', 2022-12-17, '15:43:09', '22.69', NULL, NULL, NULL, NULL),
+(333, 435, 5, 'Iloved the food!', 'Delivered by driver', 2022-12-17, '11:30:11', '45.65', NULL, NULL, NULL, NULL),
+(222, 190, 5, 'Everything was great!', 'Ready for pickup', 2022-12-17, '01:45:15', '54.76', NULL, NULL, NULL, NULL),
+(111, 909, 5, 'Great service!', 'Driver picked up', 2022-12-17, '17:30:25', '12.34', NULL, NULL, NULL, NULL);
 INSERT INTO DELIVERY (Employee_ID, Customer_ID, Order_ID, Trip_Distance, Time_Delivered) VALUES
 (001, 123, 999, '12.12', '14:50:55'),
 (002, 567, 888, '5.05', '16:40:35'),
@@ -117,6 +121,7 @@ CREATE TABLE PIZZA_ORDER (
 ) ENGINE InnoDB;
 
 
+
 ALTER TABLE PIZZA_ORDER ADD CONSTRAINT PIZZA_ORDER_Pizza_ID_fk FOREIGN KEY (Pizza_ID) REFERENCES PIZZA (Pizza_ID);
 ALTER TABLE PIZZA_ORDER ADD CONSTRAINT PIZZA_ORDER_Order_ID_fk FOREIGN KEY (Order_ID) REFERENCES ORDERS (Order_ID);
 ALTER TABLE PIZZA_ORDER ADD CONSTRAINT PIZZA_ORDER_Customer_ID_fk FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER (Order_ID);
@@ -132,3 +137,4 @@ INSERT INTO PIZZA_ORDER VALUES
 (093, 333, 435),
 (092, 222, 190),
 (091, 111, 909);
+
